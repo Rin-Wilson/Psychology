@@ -696,6 +696,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerArmature
       objectReference: {fileID: 0}
+    - target: {fileID: 6591838899403821226, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4aee359cdf5e1764c9236e94b8479b29, type: 2}
+    - target: {fileID: 6591838899403821226, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: efbbb02ddadab1a4f91077d4032ea3dd, type: 2}
+    - target: {fileID: 6591838899403821226, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 11f86f55b4d28374dbae27e0d874345c, type: 2}
+    - target: {fileID: 6591838899403821226, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4627ad79982367744a0b675cdafc3bd4, type: 2}
+    - target: {fileID: 6591838899403821226, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 11f86f55b4d28374dbae27e0d874345c, type: 2}
+    - target: {fileID: 6591838899403821226, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_Materials.Array.data[5]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2b0b64200d528c9459df17449a2c3e25, type: 2}
+    - target: {fileID: 6591838899403821226, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_Materials.Array.data[6]
+      value: 
+      objectReference: {fileID: 2100000, guid: ebd9c9b6592557b4698e9488e6c07db3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
 --- !u!1 &2133689744 stripped
@@ -720,4 +748,4 @@ MonoBehaviour:
   occipital: 0
   temporal: 0
   parietal: 0
-  startingFov: 10
+  startingFov: 20
