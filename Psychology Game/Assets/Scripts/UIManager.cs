@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class UIManager : MonoBehaviour
     public TMPro.TextMeshProUGUI parietalScore;
 
     public GameObject upgradeMenu;
+    [Space(10)]
+    public Progress progressBar;
+    public UnityEvent onWin;
+    public UnityEvent onFail;
     void Start()
     {
         
@@ -18,7 +23,15 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        
+        progressBar.updateProgress();
+        if (progressBar.winProgress >= 500f)
+        {
+            onWin.Invoke();
+        }
+        if(progressBar.failProgress >= 500f)
+        {
+            onFail.Invoke();
+        }
     }
 
     //set iq display
@@ -51,5 +64,41 @@ public class UIManager : MonoBehaviour
     public void ShowUpgradeMenu(bool show)
     {
         upgradeMenu.SetActive(show);
+    }
+}
+
+[System.Serializable]
+public class Progress
+{
+    public RectTransform winBar;
+    public RectTransform failBar;
+    public float winProgress;
+    public float failProgress;
+
+    private float visualProgress_W;
+    private float visualProgress_F;
+
+    public void updateProgress()
+    {
+        if (visualProgress_W < winProgress - 0.01 || visualProgress_W > winProgress + 0.01)
+        {
+            visualProgress_W = Mathf.Lerp(visualProgress_W, winProgress, 0.5f);
+        }
+        else
+        {
+            visualProgress_W = winProgress;
+        }
+
+        if (visualProgress_F < failProgress - 0.01 || visualProgress_F > failProgress + 0.01)
+        {
+            visualProgress_F = Mathf.Lerp(visualProgress_F, failProgress, 0.5f);
+        }
+        else
+        {
+            visualProgress_F = failProgress;
+        }
+
+        winBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, visualProgress_W);
+        failBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, visualProgress_F);
     }
 }

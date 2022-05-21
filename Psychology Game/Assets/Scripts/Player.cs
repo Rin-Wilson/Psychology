@@ -114,6 +114,7 @@ public class Player : MonoBehaviour
             if (nearestItem != null)
             {
                 nearestItem.TriggerInteract();
+                inputs.interact = false;
             }
         }
     }
