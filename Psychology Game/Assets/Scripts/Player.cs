@@ -90,20 +90,8 @@ public class Player : MonoBehaviour
         ui.SetFrontal(frontal);
         ui.SetParietal(parietal);
         ui.SetTemporal(temporal);
-        
-        if (inputs.upgradeMenu)
-        {
-            ui.ShowUpgradeMenu(true);
-            inputs.cursorInputForLook = false;
-            inputs.cursorLocked = false;
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            ui.ShowUpgradeMenu(false);
-            inputs.cursorInputForLook = true;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+
+        ui.ShowElement(inputs.upgradeMenu, 0);
     }
     
     //Item Handling

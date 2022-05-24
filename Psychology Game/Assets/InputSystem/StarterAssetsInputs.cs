@@ -17,6 +17,7 @@ namespace StarterAssets
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
+		public bool lockMovement;
 
 #if !UNITY_IOS || !UNITY_ANDROID
 		[Header("Mouse Cursor Settings")]
@@ -27,19 +28,22 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
-			MoveInput(value.Get<Vector2>());
+			if (lockMovement)
+				MoveInput(value.Get<Vector2>());
+			else
+				MoveInput(Vector2.zero);
 		}
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
-			{
+			/*if(cursorInputForLook)
+			{*/
 				LookInput(value.Get<Vector2>());
-			}
+			/*}
             else
             {
 				LookInput(Vector2.zero);
-            }
+            }*/
 		}
 
 		public void OnJump(InputValue value)

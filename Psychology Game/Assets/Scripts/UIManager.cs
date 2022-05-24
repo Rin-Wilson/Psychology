@@ -10,15 +10,25 @@ public class UIManager : MonoBehaviour
     public TMPro.TextMeshProUGUI frontalScore;
     public TMPro.TextMeshProUGUI temporalScore;
     public TMPro.TextMeshProUGUI parietalScore;
+    public TMPro.TextMeshProUGUI dialogueBox;
+    public AudioSource dialogueClick;
 
-    public GameObject upgradeMenu;
+    public GameObject[] elements;
+    private StarterAssets.StarterAssetsInputs inputs;
+    public float textCounter;
+    public float textSpeed;
+    private int nextLetter;
+
+    private string dialogue;
+
     [Space(10)]
     public Progress progressBar;
     public UnityEvent onWin;
     public UnityEvent onFail;
     void Start()
     {
-        
+        inputs = GameObject.Find("/PlayerArmature").GetComponent<StarterAssets.StarterAssetsInputs>();
+        ClearDialogue();
     }
 
     void Update()
@@ -32,38 +42,101 @@ public class UIManager : MonoBehaviour
         {
             onFail.Invoke();
         }
+
+        bool isOpen = false;
+        foreach (GameObject g in elements)
+        {
+            if (g.activeInHierarchy)
+            {
+                isOpen = true;
+            }
+        }
+
+        MouseControl(isOpen);
+        DialogueCounter();
+    }
+
+    private void DialogueCounter()
+    {
+        textCounter = textCounter > textSpeed ? 0f : textCounter + Time.deltaTime;
+
+        if (textCounter >= textSpeed)
+        {
+            if(dialogueBox.text != dialogue)
+            {
+                dialogueBox.text += dialogue.Substring(nextLetter, 1);
+                
+                if(nextLetter < dialogue.Length - 1)
+                {
+                    dialogueClick.Play();
+                    nextLetter++;
+                }
+            }
+        }
+    }
+
+    public void AddProgress(float addedProgress)
+    {
+        if(addedProgress < 0)
+        {
+            progressBar.failProgress -= addedProgress;
+        }
+        else
+        {
+            progressBar.winProgress += addedProgress;
+        }
+    }
+
+    public void WriteDialogue(string line)
+    {
+        dialogueBox.text = "";
+        nextLetter = 0;
+        dialogue = line;
+    }
+
+    public void ClearDialogue()
+    {
+        dialogueBox.text = "";
+        dialogue = "";
+    }
+
+    public void MouseControl(bool state)
+    {
+        inputs.cursorInputForLook = !state;
+        inputs.lockMovement = !state;
+        Cursor.lockState = !state? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     //set iq display
     public void SetIq(int iq)
     {
-        iqScore.text = "IQ points: " + iq;
+        iqScore.text = "" + iq;
     }
 
     //Set the lobe displays
     public void SetOccipital(int score)
     {
-        occipitalScore.text = "Occipital: (" + score + ")";
+        occipitalScore.text = "Occipital [" + score + "]";
     }
 
     public void SetFrontal(int score)
     {
-        frontalScore.text = "Frontal: (" + score + ")";
+        frontalScore.text = "Frontal [" + score + "]";
     }
 
     public void SetTemporal(int score)
     {
-        temporalScore.text = "Temporal: (" + score + ")";
+        temporalScore.text = "Temporal [" + score + "]";
     }
 
     public void SetParietal(int score)
     {
-        parietalScore.text = "Parietal: (" + score + ")";
+        parietalScore.text = "Parietal [" + score + "]";
     }
 
-    public void ShowUpgradeMenu(bool show)
+    public void ShowElement(bool show, int index)
     {
-        upgradeMenu.SetActive(show);
+        elements[index].SetActive(show);
     }
 }
 
@@ -82,7 +155,7 @@ public class Progress
     {
         if (visualProgress_W < winProgress - 0.01 || visualProgress_W > winProgress + 0.01)
         {
-            visualProgress_W = Mathf.Lerp(visualProgress_W, winProgress, 0.5f);
+            visualProgress_W = Mathf.Lerp(visualProgress_W, winProgress, 2f * Time.deltaTime);
         }
         else
         {
@@ -91,7 +164,7 @@ public class Progress
 
         if (visualProgress_F < failProgress - 0.01 || visualProgress_F > failProgress + 0.01)
         {
-            visualProgress_F = Mathf.Lerp(visualProgress_F, failProgress, 0.5f);
+            visualProgress_F = Mathf.Lerp(visualProgress_F, failProgress, 2f * Time.deltaTime);
         }
         else
         {
